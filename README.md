@@ -99,9 +99,11 @@ Prometheus config is in: **monitoring/Promethues.yml**
 Access Grafana on **http://localhost:3000** and import Prometheus as data source.
 
 ### 📝 Notes
-AWS credentials must be configured (**~/.aws/credentials**)
-EKS cluster name and region must match between Terraform and **eksctl**
-All tools/scripts are portable and modular
+
+- AWS credentials must be configured at `~/.aws/credentials`
+- EKS cluster **name** and **region** must match between Terraform and `eksctl`
+- All tools and scripts are **portable** and **modular**
+
 ---
 ### 🤝 Contributing
 PRs are welcome. For major changes, open an issue first to discuss what you’d like to change.
