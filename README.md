@@ -1,7 +1,6 @@
 # CI/CD Automation Pipeline 🚀
-<p align="center">
-  <img src="public/pipeline-diagram.png" width="600"/>
-</p>
+  <img src="public/pipeline-diagram.png" />
+
 
 
 This repository automates infrastructure provisioning, application deployment, and monitoring using:
