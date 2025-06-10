@@ -2,10 +2,10 @@ pipeline{
     agent any
     tools{
         jdk 'jdk'
-        nodejs 'node17'
+        nodejs 'nodeJS'
     }
     environment {
-        SCANNER_HOME=tool 'sonar-scanner'
+        SCANNER_HOME=tool 'sonarqube-scanner'
     }
     stages {
         stage('clean workspace'){
@@ -15,21 +15,25 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', url: 'https://github.com/Aseemakram19/amazon-prime-video-kubernetes.git'
+                git 'https://github.com/Debjyoti2004/amazon-prime-clone.git'
             }
         }
         stage("Sonarqube Analysis "){
             steps{
                 withSonarQubeEnv('SonarQube') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=amazon-prime-video \
-                    -Dsonar.projectKey=amazon-prime-video '''
+                    sh ''' 
+                       $SCANNER_HOME/bin/sonar-scanner \
+                       -Dsonar.projectName=amazon-prime \
+                       -Dsonar.projectKey=amazon-prime \
+                       -Dsonar.branch.name=main 
+                    '''
                 }
             }
         }
         stage("quality gate"){
            steps {
                 script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' 
+                    waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube-Token' 
                 }
             } 
         }
@@ -46,10 +50,10 @@ pipeline{
         stage("Docker Build & Push"){
             steps{
                 script{
-                   withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                       sh "docker build -t amazon-prime-video ."
-                       sh "docker tag amazon-prime-video aseemakram19/amazon-prime-video:latest "
-                       sh "docker push aseemakram19/amazon-prime-video:latest "
+                   withDockerRegistry(credentialsId: 'Docker', toolName: 'docker'){   
+                       sh "docker build -t amazon-prime ."
+                       sh "docker tag amazon-prime debjyoti08/amazon-prime:latest "
+                       sh "docker push debjyoti08/amazon-prime:latest "
                     }
                 }
             }
@@ -57,10 +61,10 @@ pipeline{
 		stage('Docker Scout Image') {
             steps {
                 script{
-                   withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh 'docker-scout quickview aseemakram19/amazon-prime-video:latest'
-                       sh 'docker-scout cves aseemakram19/amazon-prime-video:latest'
-                       sh 'docker-scout recommendations aseemakram19/amazon-prime-video:latest'
+                   withDockerRegistry(credentialsId: 'Docker', toolName: 'docker'){
+                       sh 'docker-scout quickview debjyoti08/amazon-prime:latest'
+                       sh 'docker-scout cves debjyoti08/amazon-prime:latest'
+                       sh 'docker-scout recommendations debjyoti08/amazon-prime:latest'
                    }
                 }
             }
@@ -68,12 +72,12 @@ pipeline{
 
         stage("TRIVY-docker-images"){
             steps{
-                sh "trivy image aseemakram19/amazon-prime-video:latest > trivyimage.txt" 
+                sh "trivy image debjyoti08/amazon-prime:latest > trivyimage.txt" 
             }
         }
         stage('App Deploy to Docker container'){
             steps{
-                sh 'docker run -d --name amazon-prime-video -p 3000:3000 aseemakram19/amazon-prime-video:latest'
+                sh 'docker run -d --name amazon-prime -p 3000:3000 debjyoti08/amazon-prime:latest'
             }
         }
 
@@ -87,16 +91,16 @@ pipeline{
             emailext (
                 subject: "Pipeline ${buildStatus}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
-                    <p>This is a Jenkins amazon-prime-video CICD pipeline status.</p>
+                    <p>This is a Jenkins amazon-prime CICD pipeline status.</p>
                     <p>Project: ${env.JOB_NAME}</p>
                     <p>Build Number: ${env.BUILD_NUMBER}</p>
                     <p>Build Status: ${buildStatus}</p>
                     <p>Started by: ${buildUser}</p>
                     <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                 """,
-                to: 'mohdaseemakram19@gmail.com',
-                from: 'mohdaseemakram19@gmail.com',
-                replyTo: 'mohdaseemakram19@gmail.com',
+                to: 'debjyotishit8@gmail.com',
+                from: 'debjyotishit8@gmail.com',
+                replyTo: 'debjyotishit8@gmail.com',
                 mimeType: 'text/html',
                 attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
             )
