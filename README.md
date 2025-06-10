@@ -53,15 +53,17 @@ chmod +x scripts/*.sh
 ```
 
 ### 2. 🔧 Install Tools via Scripts
-./scripts/awscli.sh        # Install & configure AWS CLI
-./scripts/docker.sh        # Install Docker
-./scripts/terraform.sh     # Install Terraform
-./scripts/kubectl.sh       # Install kubectl
-./scripts/eksctl.sh        # Install eksctl for EKS
-./scripts/jenkins.sh       # Install Jenkins
-./scripts/prometheus.sh    # Setup Prometheus
-./scripts/grafana.sh       # Setup Grafana
-./scripts/trivy.sh         # Setup Trivy scanner
+
+- `./scripts/awscli.sh` – Install & configure AWS CLI  
+- `./scripts/docker.sh` – Install Docker  
+- `./scripts/terraform.sh` – Install Terraform  
+- `./scripts/kubectl.sh` – Install kubectl  
+- `./scripts/eksctl.sh` – Install eksctl for EKS  
+- `./scripts/jenkins.sh` – Install Jenkins  
+- `./scripts/prometheus.sh` – Setup Prometheus  
+- `./scripts/grafana.sh` – Setup Grafana  
+- `./scripts/trivy.sh` – Setup Trivy scanner
+
 
 ### ☁️ Infrastructure Provisioning (Terraform)
 ```sh 
