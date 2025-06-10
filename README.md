@@ -14,33 +14,36 @@ This repository automates infrastructure provisioning, application deployment, a
 
 ---
 
-## 📂 Directory Structure
+## 📁 Directory Structure
+
+```
 .
 ├── monitoring/
-│ └── Promethues.yml # (Note: should be Prometheus.yml)
+│   └── Promethues.yml   # (Note: should be Prometheus.yml)
 ├── public/
-├── scripts/ # All setup/install scripts
-│ ├── awscli.sh
-│ ├── docker.sh
-│ ├── eksctl.sh
-│ ├── grafana.sh
-│ ├── jenkins.sh
-│ ├── kubectl.sh
-│ ├── permissionexecute.sh
-│ ├── prometheus.sh
-│ ├── terraform.sh
-│ └── trivy.sh
-├── src/ # Source code
-├── terraform/ # IaC for AWS infra (EKS, etc.)
-│ ├── main.tf
-│ ├── output.tf
-│ └── variables.tf
+├── scripts/             # All setup/install scripts
+│   ├── awscli.sh
+│   ├── docker.sh
+│   ├── eksctl.sh
+│   ├── grafana.sh
+│   ├── jenkins.sh
+│   ├── kubectl.sh
+│   ├── permissionexecute.sh
+│   ├── prometheus.sh
+│   ├── terraform.sh
+│   └── trivy.sh
+├── src/                 # Source code
+├── terraform/           # IaC for AWS infra (EKS, etc.)
+│   ├── main.tf
+│   ├── output.tf
+│   └── variables.tf
 ├── Dockerfile
 ├── Jenkinsfile
 ├── Jenkinsfile2-eks
 ├── package.json
 ├── package-lock.json
 └── README.md
+```
 
 ---
 
